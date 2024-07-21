@@ -255,3 +255,9 @@ tar_make(
 )
 ```
 ````
+
+## Command line execution
+
+Give this a try:
+
+    Rscript testing-crew.R
