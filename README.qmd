@@ -228,6 +228,10 @@ tar_make(
 )
 ```
 
+```{r}
+targets::tar_read(conns)
+```
+
 ## Command line execution
 
 Give this a try:

@@ -256,6 +256,14 @@ tar_make(
 ```
 ````
 
+```` markdown
+```{r}
+targets::tar_read(conns)
+```
+````
+
+    [1] 333
+
 ## Command line execution
 
 Give this a try:
