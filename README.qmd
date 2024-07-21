@@ -1,6 +1,6 @@
 ---
 title: targets and crew::crew_launcher_local()
-format: markdown
+format: gfm
 execute:
   echo: fenced
   message: false
