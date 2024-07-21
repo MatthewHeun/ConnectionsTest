@@ -1,39 +1,37 @@
 ---
-title: targets and crew::crew_launcher_local()
-format: markdown
 execute:
   echo: fenced
   message: false
   warrning: false
-keep-md: true
-embed-resources: true
+title: "targets and crew::crew_launcher_local()"
+toc-title: Table of contents
 ---
 
-This example contains three targets files 
+This example contains three targets files
 
-* `targets-nocrew.R`,
-* `targets-crew.R`, and 
-* `targets-crew-custom.R`
+-   `targets-nocrew.R`,
+-   `targets-crew.R`, and
+-   `targets-crew-custom.R`
 
 The differ only in what controller is used.
 
 For example, in `_targets-crew.R`, we have
 
-```r
+``` r
 controller = crew::crew_controller_local(workers = 2, seconds_idle = 60)
 ```
 
 But in `_targets-crew-custom.R`, we have
 
-```r
+``` r
 controller = crew_controller_custom(workers = 2, seconds_idle = 60)
 ```
 
 (See below for the definition of the custom controller.)
 
-#### _targets-crew.R
+#### \_targets-crew.R
 
-```r
+``` r
 # _targets-crew.R
 library(targets)
 
@@ -50,28 +48,45 @@ list(
 )
 ```
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 #| label: setup
 library(targets)
 ```
+````
+:::
 
 ## Without `crew::crew_controller_local()`
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-nocrew.R"
 )
 ```
+````
+:::
 
-
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 targets::tar_read(conns)
 ```
+````
 
+::: {.cell-output .cell-output-stdout}
+    [1] 128
+:::
+:::
+
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-nocrew.R",
@@ -80,28 +95,51 @@ tar_make(
   )
 )
 ```
+````
+:::
 
-
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 targets::tar_read(conns)
 ```
+````
+
+::: {.cell-output .cell-output-stdout}
+    [1] 400
+:::
+:::
 
 ## With `crew::crew_controller_local()`
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-crew.R"
 )
 ```
+````
+:::
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 targets::tar_read(conns)
 ```
+````
 
+::: {.cell-output .cell-output-stdout}
+    [1] 128
+:::
+:::
+
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-crew.R",
@@ -110,21 +148,34 @@ tar_make(
   )
 )
 ```
+````
+:::
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 targets::tar_read(conns)
 ```
+````
+
+::: {.cell-output .cell-output-stdout}
+    [1] 128
+:::
+:::
 
 ## Issue
 
-It doesn't appear that `crew::crew_controller_local()` allows for passing arguments to the 
-R process that it launches.  So a custom controller can be created.
-See <https://wlandau.github.io/crew/articles/plugins.html#example>
+It doesn't appear that `crew::crew_controller_local()` allows for
+passing arguments to the R process that it launches. So a custom
+controller can be created. See
+<https://wlandau.github.io/crew/articles/plugins.html#example>
 
 ### Custom launcher & controller
 
 These are in `R/custom-controller.R`
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 custom_launcher_class <- R6::R6Class(
   classname = "custom_launcher_class",
@@ -144,7 +195,11 @@ custom_launcher_class <- R6::R6Class(
   )
 )
 ```
+````
+:::
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 #' @title Create a controller with the custom launcher.
 #' @export
@@ -202,22 +257,37 @@ crew_controller_custom <- function(
   controller
 }
 ```
+````
+:::
 
-
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-crew-custom.R"
 )
 ```
+````
+:::
 
+::: cell
+```` {.markdown .cell-code}
 ```{r}
 targets::tar_read(conns)
 ```
+````
 
+::: {.cell-output .cell-output-stdout}
+    [1] 333
+:::
+:::
+
+::: cell
+```` {.markdown .cell-code}
 ```{r}
-#| results: hide 
+#| results: hide
 tar_destroy()
 tar_make(
   script = "_targets-crew-custom.R",
@@ -227,3 +297,5 @@ tar_make(
   
 )
 ```
+````
+:::
